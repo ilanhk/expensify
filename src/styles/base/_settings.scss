@@ -1,0 +1,20 @@
+//Defining the Theme for the app
+// allows us to create css variables to use in more than one selector
+// Easier for us to  change the variable in 1 page instead of going through all selectors in different files.
+
+// $brand-color: blue; // you can set up variables like this
+
+// *{
+//     color: $brand-color;
+// }
+
+
+//Colors
+
+//Spacing
+$small-size: 1.2rem; 
+$medium-size: 1.6rem;
+$large-size: 3.2rem;
+$xl-size: 4.8rem;
+$desktop-breakpoint: 45rem;
+

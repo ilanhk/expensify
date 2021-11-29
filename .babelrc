@@ -1,0 +1,8 @@
+// .babelrc is a JSON file that allows us to take all the arguments we pass into the command line
+// and put them in here:
+
+{
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "plugins": ["transform-class-properties"]
+}
+//pretty much says any file that runs babel run with these presets
