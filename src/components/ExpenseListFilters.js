@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import 'react-dates/initialize';
-import { DateRangePicker } from "react-dates";
-import 'react-dates/lib/css/_datepicker.css';
+// import 'react-dates/initialize';
+import { DateRangePicker } from "react-dates"; //https://github.com/airbnb/react-dates
+// import 'react-dates/lib/css/_datepicker.css';
 import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "../actions/filters";
 
 class ExpenseListFilters extends React.Component {
@@ -18,8 +18,8 @@ class ExpenseListFilters extends React.Component {
         this.props.dispatch(setEndDate(endDate));
     };
 
-    onFocusChange = (calendarfocused)=>{
-        this.setState(()=>({ calendarfocused }));
+    onFocusChange = (calendarFocused)=>{
+        this.setState(()=>({ calendarFocused }));
     };
 
     render(){
@@ -40,9 +40,9 @@ class ExpenseListFilters extends React.Component {
                     <option value="amount">Amount</option>
                 </select>
                 <DateRangePicker 
-                    startDate={this.state.startDate}
+                    startDate={this.props.filters.startDate}
                     startDateId={"dwjkhqkehwqjkeq"}
-                    endDate={this.state.endDate}
+                    endDate={this.props.filters.endDate}
                     endDateId={"cxzvcxbzbczxbz"}
                     onDatesChange={this.onDatesChange}
                     focusedInput={this.state.calendarFocused}
