@@ -1,12 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+// import toJSON from 'enzyme-to-json'; //just using toJSON to get the correct snapshots, here are the documentation: https://github.com/adriantoine/enzyme-to-json use this once
 //import ReactShallowRenderer from 'react-test-renderer/shallow'; //react-test-renderer allows us to render our components with Javascript and we can assert what got rendered
 import Header from '../../components/Header';
 
 test('should render header correctly', ()=>{
     //when using enzyme:
     const wrapper = shallow(<Header />); //shallow takes in JSX that we are trying to render
-    expect(wrapper.find('h1').text()).toBe('Expensify');
+    // expect(wrapper.find('h1').text()).toBe('Expensify'); // example on what enzyme can do (can test specific elements in a component)
+    // expect(toJSON(wrapper)).toMatchSnapshot(); //create a snapshot base off of the enzyme wrapper need to use toJson() once thats why this line is commented out
+    expect(wrapper).toMatchSnapshot();
+
 
     //when using 'react-test-renderer/shallow' 
     // const renderer = new ReactShallowRenderer(); // need to create a new renderer first

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment'; // Library that allows us Parse, validate, manipulate,and display dates and times in JavaScript: https://momentjs.com/
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates'; //airbnb Library to pick dates from a nice calender https://github.com/airbnb/react-dates
-import 'react-dates/lib/css/_datepicker.css' //need the css in order for react-dates to work
+
 
 
 //const date = new Date(); react has a date object but api is terrible so not going to use it.
