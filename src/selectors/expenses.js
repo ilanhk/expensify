@@ -1,11 +1,13 @@
 import moment from "moment";
+
 //Get Visible Expenses
 
 export default (expenses, {text, sortBy, startDate, endDate})=>{
     return expenses.filter((expense)=>{
         const createdAtMoment = moment(expense.createdAt);
-        const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate; // if typeof startDate !== 'number' is false then it would run the other code next to ||
-        const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+        // const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate; // if typeof startDate !== 'number' is false then it would run the other code next to ||
+        const startDateMatch = startDate ? startDate.isSameOrBefore(createdAtMoment, 'day') : true; // for isSameOrBefore check docs : https://momentjs.com/docs/#/query/
+        const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
         const textMatch = expense.description.toLowerCase().includes(text.toLowerCase()); // includes means if the array has that item.
 
         return startDateMatch && endDateMatch && textMatch;
