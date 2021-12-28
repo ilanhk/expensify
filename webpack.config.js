@@ -37,11 +37,11 @@ module.exports = (env)=>{
         },
         plugins: [new MiniCssExtractPlugin()],
         devtool: isProduction ? 'source-map': 'eval-cheap-module-source-map', // this debugs the whole app and makes it easier for us to find mistakes if there is any
-        // performance: {
-        //     hints: false,
-        //     maxEntrypointSize: 512000,
-        //     maxAssetSize: 512000
-        // },
+        performance: {
+            hints: false,
+            maxEntrypointSize: 512000,
+            maxAssetSize: 512000
+        },
         devServer: {
             static: path.join(__dirname, 'public'), // this instead of live-server needs the absolute path of public
             historyApiFallback: true //this to tells the devserver that we are handling routing via Client side code and it should return index.hml for all 404 routes. In order to allow multiple pages.
