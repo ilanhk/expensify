@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import 'react-dates/initialize';
 import { DateRangePicker } from "react-dates"; //https://github.com/airbnb/react-dates
-// import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/lib/css/_datepicker.css';
 import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "../actions/filters";
 
 export class ExpenseListFilters extends React.Component {

@@ -31,7 +31,8 @@ module.exports = (env)=>{
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader'
+                    'sass-loader',
+                    // 'style-loader',
                 ],
             }] // need to create this rule to use css and scss(sass-loader)
         },

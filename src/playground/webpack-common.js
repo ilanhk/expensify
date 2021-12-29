@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // extract-text-webpack-plugin has been depreciated they told me to go to here: https://github.com/webpack-contrib/mini-css-extract-plugin
 
 //THIS FILENAME SHOULD BE: webpack.common.js
 
