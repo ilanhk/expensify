@@ -32,14 +32,23 @@ module.exports = (env)=>{
                 test: /\.s?css$/, //? will make the s optional so that it can support css and scss files
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader',
-                    // 'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
                 ],
             }] // need to create this rule to use css and scss(sass-loader)
         },
         plugins: [new MiniCssExtractPlugin()],
-        devtool: isProduction ? 'source-map': 'eval-cheap-module-source-map', // this debugs the whole app and makes it easier for us to find mistakes if there is any
+        devtool: isProduction ? 'source-map': 'inline-source-map', // this debugs the whole app and makes it easier for us to find mistakes if there is any
         performance: {
             hints: false,
             maxEntrypointSize: 512000,
