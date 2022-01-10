@@ -19,7 +19,7 @@ module.exports = (env)=>{
     return {
         entry: './src/app.js', //need to tell webpack where it should start (the file that runs the app)
         output: {
-            path:path.join(__dirname, 'public'), // this is the absoulute path on the machine to where i need to output that webpack file
+            path:path.join(__dirname, 'public', 'dist'), // this is the absoulute path on the machine to where i need to output that webpack file
             filename:'bundle.js' // bundle.js is a very common filename for webpack. but can name the filename to anything
         },
         module: {
@@ -56,7 +56,11 @@ module.exports = (env)=>{
         },
         devServer: {
             static: path.join(__dirname, 'public'), // this instead of live-server needs the absolute path of public
-            historyApiFallback: true //this to tells the devserver that we are handling routing via Client side code and it should return index.hml for all 404 routes. In order to allow multiple pages.
+            historyApiFallback: true, //this to tells the devserver that we are handling routing via Client side code and it should return index.hml for all 404 routes. In order to allow multiple pages.
+            devMiddleware: {
+                publicPath: '/dist/',
+
+              },
         }
     };
     
