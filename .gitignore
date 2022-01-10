@@ -1,1 +1,5 @@
 node_modules/
+public/bundle.js
+public/main.css
+bundle.js.LICENSE.txt
+dist
