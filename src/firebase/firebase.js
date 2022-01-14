@@ -2,7 +2,7 @@
 //docs to intergrate firebase: https://firebase.google.com/docs/database/web/start 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, remove } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,7 +30,10 @@ const analytics = getAnalytics(app);
 // Get a reference to the database service 
 //docs for read, write, update, delete from database: https://firebase.google.com/docs/database/web/read-and-write
 //docs how to create multiple datasets: https://firebase.google.com/docs/database/usage/sharding 
+// examples to watch for firebase 9 https://www.youtube.com/watch?v=BOITPwChVP4&ab_channel=TACV-TheAmazingCode-Verse
 
+//write into dataset:
+// use set()
 function writeUserData(userId, name, email, age, isSingle, city, country) {
   const db = getDatabase();
   set(ref(db, 'users/' + userId), {
@@ -47,3 +50,26 @@ function writeUserData(userId, name, email, age, isSingle, city, country) {
 
 writeUserData('23542354234', 'Ilan', 'ilanlieberman@hotmail.com', 28, true, 'Hong Kong', 'Hong Hong SAR'); // this is how you write data to firebase
 writeUserData('23542354235', 'bob', 'bobjs@hotmail.com', 27, false, 'New York', 'USA');
+
+//To read from data set:
+// use onValue()
+const db = getDatabase();
+const userId = 23542354234;
+const reference = ref(db, 'users/' + userId);
+onValue(reference, (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+});
+
+//to edit from a data set
+// use update()
+
+const updates ={
+  isSingle: false,
+  age: 10000
+};
+
+update(reference, updates);
+
+//to delete:
+// remove(reference);

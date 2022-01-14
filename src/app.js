@@ -11,6 +11,7 @@ import './styles/styles.scss'; //need to load in the css file to make it work
 import 'react-dates/lib/css/_datepicker.css' //need the css in order for react-dates to work
 import './firebase/firebase'; //https://console.firebase.google.com/project/expensify-f1026/overview
 
+
 const store = configureStore();
 
 const jsx = (
