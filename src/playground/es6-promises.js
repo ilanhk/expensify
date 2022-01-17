@@ -14,11 +14,11 @@ const promise = new Promise((resolve, reject)=>{
 
 console.log('before');
 
-// promise.then((data)=>{
-//     console.log('1', data);
-// }).catch((error)=>{
-//     console.log(error)
-// }); 
+promise.then((data)=>{
+    console.log('1', data);
+}).catch((error)=>{
+    console.log(error)
+}); 
 //allows us to register a callback function when the promise resolves. I we will have access to the promise resolved data
 // if promise is rejected it will create an error but catch catches the error allowing us to use the reject data and do something about it.
 
