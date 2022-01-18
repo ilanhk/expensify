@@ -2,9 +2,10 @@
 //docs to intergrate firebase: https://firebase.google.com/docs/database/web/start 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set, onValue, update, remove, off } from "firebase/database"; //set(), remove(), update() are promises so can you .then for successful result and .catch for failures/errors
+import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded } from "firebase/database"; //set(), remove(), update() are promises so can you .then for successful result and .catch for failures/errors
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -22,15 +23,48 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-// firebase.initializeApp(firebaseConfig);
-// firebase.database().ref().set({
-// 	name: 'Ilan Lieberman'
-// });
 
-// Get a reference to the database service 
+
+// Get a reference to the database service: 
 //docs for read, write, update, delete from database: https://firebase.google.com/docs/database/web/read-and-write
 //docs how to create multiple datasets: https://firebase.google.com/docs/database/usage/sharding 
 // examples to watch for firebase 9 https://www.youtube.com/watch?v=BOITPwChVP4&ab_channel=TACV-TheAmazingCode-Verse
+
+
+
+//firebase doesnt accept arrays for storing list based data - if you do it firebase will try to convert it to an object type structure. Hence should be stored as an object not an array
+// const notes = [{
+//   id: '12',
+//   title: 'first note',
+//   body: 'This is my note'
+// },{
+//   id: '761ase',
+//   title: 'Another note',
+//   body: 'This is my note'
+// }];
+
+// //this is how yoy should store list based data. The keys are the unqiue ids and its value is the item you would put in an array
+// const firebaseNotes = {
+//   notes:{
+//     qwfrerg: {
+//       title: 'first note',
+//       body: 'This is my note'
+//     },
+//     wegrwethrth: {
+//       title: 'Another note',
+//       body: 'This is my note'
+//     }
+//   }
+// };
+
+// const db = getDatabase();
+// set(ref(db, 'notes'), notes)
+// .then(()=>{
+//   console.log('Data is saved!');
+// })
+// .catch((e)=>{
+//   console.log('This failed!!:', e);
+// });
 
 //write into dataset:
 // use set() 
@@ -52,20 +86,49 @@ function writeUserData(userId, name, email, age, isSingle, city, country) {
   });
 };
 
-writeUserData('23542354234', 'Ilan', 'ilanlieberman@hotmail.com', 28, true, 'Hong Kong', 'Hong Hong SAR'); // this is how you write data to firebase
-writeUserData('23542354235', 'bob', 'bobjs@hotmail.com', 27, false, 'New York', 'USA');
+// writeUserData('23542354234', 'Ilan', 'ilanlieberman@hotmail.com', 28, true, 'Hong Kong', 'Hong Hong SAR'); // this is how you write data to firebase
+// writeUserData('23542354235', 'bob', 'bobjs@hotmail.com', 27, false, 'New York', 'USA');
 
 //To read from data set:
 // use onValue()
-const db = getDatabase();
-const userId = 23542354235;
-const reference = ref(db, 'users/' + userId);
-onValue(reference, (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-});
+// const db = getDatabase();
+// const userId = 23542354235;
+// const reference = ref(db, 'users/' + userId);
+// onValue(reference, (snapshot) => {
+//   const data = snapshot.val();
+//   console.log(data);
+// });
 
 // off(reference); turns off subscrition to the reference
+
+
+//this would show/watch the datset if any of it is changed
+// onValue(ref(db, 'expenses'), (snapshot) => {
+//   const expenses = [];
+  
+//   snapshot.forEach((childSnapshot)=>{
+//     expenses.push({
+//       id: childSnapshot.key,
+//       ...childSnapshot.val()
+//     });
+//   });
+//   console.log(expenses);
+// });
+
+///this will fire everytime a child is removed 
+// onChildRemoved(ref(db, 'expenses'), (snapshot)=>{
+//   console.log(snapshot.key, snapshot.val()) // get the deleted key value pair
+// });
+
+// ///this will fire everytime a child had changed
+// onChildChanged(ref(db, 'expenses'), (snapshot)=>{
+//   console.log(snapshot.key, snapshot.val()) // get the deleted key value pair
+// });
+
+// //this will fire everytime a new child is added
+// onChildAdded(ref(db, 'expenses'), (snapshot)=>{
+//   console.log(snapshot.key, snapshot.val()) // get the deleted key value pair
+// });
 
 
 //to edit from a data set
@@ -106,3 +169,19 @@ onValue(reference, (snapshot) => {
 //   }).catch((e)=>{
 //     console.log('Error in removing data: ', e)
 //   });
+
+
+// using push() - push can add a new entry to the data set giving it a new unique key for each entry you push.
+// const db = getDatabase();
+// const notes = {
+//   title: 'random note',
+//   body: 'This is my note'
+// }
+// push(ref(db, 'notes'), notes); 
+
+// push(ref(db, 'expenses'), {
+//   description: 'Rent',
+//   note: '',
+//   amount: 109500,
+//   createdAt:254242365373468
+// }); 
