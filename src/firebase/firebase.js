@@ -21,8 +21,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export const db = getDatabase();
+
+
 
 
 // Get a reference to the database service: 
@@ -68,23 +72,23 @@ const analytics = getAnalytics(app);
 
 //write into dataset:
 // use set() 
-function writeUserData(userId, name, email, age, isSingle, city, country) {
-  const db = getDatabase();
-  set(ref(db, 'users/' + userId), {
-    username: name,
-    email,
-    age,
-    isSingle,
-    location: {
-      city,
-      country
-    }
-  }).then(()=>{
-    console.log('Data is saved!');
-  }).catch((e)=>{
-    console.log('This failed!!:', e);
-  });
-};
+// function writeUserData(userId, name, email, age, isSingle, city, country) {
+//   const db = getDatabase();
+//   set(ref(db, 'users/' + userId), {
+//     username: name,
+//     email,
+//     age,
+//     isSingle,
+//     location: {
+//       city,
+//       country
+//     }
+//   }).then(()=>{
+//     console.log('Data is saved!');
+//   }).catch((e)=>{
+//     console.log('This failed!!:', e);
+//   });
+// };
 
 // writeUserData('23542354234', 'Ilan', 'ilanlieberman@hotmail.com', 28, true, 'Hong Kong', 'Hong Hong SAR'); // this is how you write data to firebase
 // writeUserData('23542354235', 'bob', 'bobjs@hotmail.com', 27, false, 'New York', 'USA');

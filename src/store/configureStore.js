@@ -1,6 +1,9 @@
-import { createStore, combineReducers } from 'redux'; 
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'; //need to add applyMiddleware if you want to add middleware to the store like redux-thunk
 import expensesReducer from '../reducers/expenses';
 import filtersReducer from '../reducers/filters';
+import thunk from 'redux-thunk'; // // Thunk middleware for Redux. It allows writing functions with logic inside that can interact with a Redux store's dispatch and getState methods becuase redux by itself only accepts objects not functions.
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose; //docs redux-devtools extention: https://github.com/zalmoxisus/redux-devtools-extension 
 
 // Store Creation
 export default ()=>{
@@ -9,8 +12,8 @@ export default ()=>{
             expenses: expensesReducer,
             filters: filtersReducer
         }),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-        // this line is for redux-devtools extention: https://github.com/zalmoxisus/redux-devtools-extension 
+        
+        composeEnhancers(applyMiddleware(thunk))
     );
 
     return store
