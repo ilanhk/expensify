@@ -18,7 +18,7 @@ export const startAddExpense = (expenseData = {})=>{
             createdAt = 0 
         } = expenseData;
         const expense = { description, note, amount, createdAt };
-        push(ref(db, 'expenses'), expense).then((ref)=>{
+        return push(ref(db, 'expenses'), expense).then((ref)=>{
             dispatch(addExpense({
                 id: ref.key,
                 ...expense

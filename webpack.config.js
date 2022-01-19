@@ -4,6 +4,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // extract-text-webpack-plugin has been depreciated they told me to go to here: https://github.com/webpack-contrib/mini-css-extract-plugin
+const { webpack } = require('webpack');
 
 // THIS FILENAME WAS: webpack.config.js
 
@@ -11,7 +12,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // extract-text
 
 //Entry --> output
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
+if (process.env.NODE_ENV === 'test') {
+    require('dotenv').config({ path: '.env.test'});
+} else if (process.env.NODE_ENV === 'development'){
+    require('dotenv').config({ path: '.env.development'});
+}
 
 module.exports = (env)=>{
     const isProduction = env === 'production';
@@ -47,7 +54,12 @@ module.exports = (env)=>{
                 ],
             }] // need to create this rule to use css and scss(sass-loader)
         },
-        plugins: [new MiniCssExtractPlugin()],
+        plugins: [
+            new MiniCssExtractPlugin(),
+            new webpack.DefinePlugin({
+                'process.env.FIREBASE_API_KEY' : process.env.FIREBASE_API_KEY
+            })
+        ],
         devtool: isProduction ? 'source-map': 'inline-source-map', // this debugs the whole app and makes it easier for us to find mistakes if there is any
         performance: {
             hints: false,

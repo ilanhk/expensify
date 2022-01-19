@@ -4,12 +4,12 @@ import { AddExpensePage } from '../../components/AddExpensePage';
 import expenses from '../fixtures/test-expenses-data';
 
 //instead of using the same code in each test cases we will use globals docs: https://jestjs.io/docs/api 
-let addExpense, history, wrapper;
+let startAddExpense, history, wrapper;
 
 beforeEach(()=>{
-    addExpense = jest.fn();
+    startAddExpense = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<AddExpensePage addExpense={addExpense} history={history} />);
+    wrapper = shallow(<AddExpensePage startAddExpense={startAddExpense} history={history} />);
 }); //runs a function before each of the tests in the file runs.
 
 test('should render AddExpensePage correctly', ()=>{
@@ -25,6 +25,6 @@ test('should handle onSubmit', ()=>{
     // const wrapper = shallow(<AddExpensePage onSubmit={onSubmit} history={history} />);
     wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(addExpense).toHaveBeenLastCalledWith(expenses[1]);
+    expect(startAddExpense).toHaveBeenLastCalledWith(expenses[1]);
 });
 

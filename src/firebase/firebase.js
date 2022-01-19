@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 
 export const db = getDatabase();
 
@@ -183,7 +183,7 @@ export const db = getDatabase();
 // }
 // push(ref(db, 'notes'), notes); 
 
-// push(ref(db, 'expenses'), {
+// push(ref(db, 'expenses'), {ud
 //   description: 'Rent',
 //   note: '',
 //   amount: 109500,
