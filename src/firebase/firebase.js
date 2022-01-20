@@ -2,7 +2,7 @@
 //docs to intergrate firebase: https://firebase.google.com/docs/database/web/start 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded } from "firebase/database"; //set(), remove(), update() are promises so can you .then for successful result and .catch for failures/errors
+import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded, child, get } from "firebase/database"; //set(), remove(), update(), get() are promises so can you .then for successful result and .catch for failures/errors
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -117,6 +117,17 @@ export const db = getDatabase();
 //     });
 //   });
 //   console.log(expenses);
+// });
+
+//read from dataset once:
+// get(child(ref(db), `users/${userId}`)).then((snapshot) => {
+//   if (snapshot.exists()) {
+//     console.log(snapshot.val());
+//   } else {
+//     console.log("No data available");
+//   }
+// }).catch((error) => {
+//   console.error(error);
 // });
 
 ///this will fire everytime a child is removed 

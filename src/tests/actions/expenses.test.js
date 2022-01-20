@@ -1,11 +1,22 @@
 import configureMockStore from 'redux-mock-store'; //docs: https://github.com/reduxjs/redux-mock-store
 import thunk from 'redux-thunk';
-import { startAddExpense, addExpense, editExpense, removeExpense } from '../../actions/expenses';
+import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
 import expenses from '../fixtures/test-expenses-data';
 import { db } from '../../firebase/firebase';
-import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded, get, child } from "firebase/database";
 
 const createMockStore = configureMockStore([thunk]) //created a mock redux store with middleware thunk
+
+
+beforeEach((done)=>{
+    const expensesData={};
+    expenses.forEach(({ id, description, amount, note, createdAt })=>{
+        expensesData[id] = { description, amount, note, createdAt };
+    });
+
+    set(ref(db, 'expenses'), expensesData).then(()=> done());
+});
+
 
 test('should setup remove expense action object', ()=>{
     const action = removeExpense({ id: '123abc' });
@@ -58,13 +69,15 @@ test('should add expense to database and store', (done) => {
                 ...expenseData
             }
         });
-        const reference = ref(db, `expenses/${actions[0].expense.id}`);
-        onValue(reference, (snapshot) => {
+        get(child(ref(db), `expenses/${actions[0].expense.id}`)).then((snapshot) => {
             expect(snapshot.val()).toEqual(expenseData);
         });
         done(); //Need to tell jest a test is async by adding 'done' as an arguement and done() at the end
     });
 });
+
+
+
 
 
 test('should add expense with defaults to database and store', (done) => {
@@ -84,8 +97,7 @@ test('should add expense with defaults to database and store', (done) => {
                 ...expenseDefault
             }
         });
-        const reference = ref(db, `expenses/${actions[0].expense.id}`);
-        onValue(reference, (snapshot) => {
+        get(child(ref(db), `expenses/${actions[0].expense.id}`)).then((snapshot) => {
             expect(snapshot.val()).toEqual(expenseDefault);
         });
         done(); //Need to tell jest a test is async by adding 'done' as an arguement and done() at the end
@@ -93,19 +105,22 @@ test('should add expense with defaults to database and store', (done) => {
 });
 
 
-// test('should setup add expense object with default', ()=>{
-//     const expenseData = { 
-//         description: '',
-//         note: '', 
-//         amount: 0, 
-//         createdAt: 0 
-//     };
-//     const action = addExpense();
-//     expect(action).toEqual({
-//         type: 'ADD_EXPENSE',
-//         expense: {
-//             ...expenseData,
-//             id: expect.any(String)
-//         }
-//     });
-// });
+test('should setup set expense action object with data', () => {
+  const action = setExpenses(expenses);
+  expect(action).toEqual({
+    type: 'SET_EXPENSES',
+    expenses
+  });
+});
+
+test('should fetch the expenses from firebase', (done) => {
+    const store = createMockStore({});
+    store.dispatch(startSetExpenses()).then(()=>{
+        const action = store.getActions();
+        expect(action[0]).toEqual({
+            type: 'SET_EXPENSES',
+            expenses
+        });
+        done();
+    });
+});

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'; //need to install react-redux to get <Provider/>
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import { addExpense } from './actions/expenses';
+import { startSetExpenses } from './actions/expenses';
 import { setTextFilter } from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css'; // need to install it. This would make sure all internet browsers would start from the exact same place and load up the css/scss files correctely. We did this by adding a css reset. good to make it a cross browser friendly app
@@ -22,5 +22,11 @@ const jsx = (
 );
 // Any component nested in <Provider/> can have access to the prop store 
 
-ReactDOM.render(jsx, document.getElementById('app'));// need this to render stuff to the screen
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+store.dispatch(startSetExpenses()).then(()=>{
+    ReactDOM.render(jsx, document.getElementById('app'));// need this to render stuff to the screen
+});
+
+
 

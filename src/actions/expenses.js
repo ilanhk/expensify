@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';; // to generate random ids
 import { app, db } from '../firebase/firebase';
-import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, remove, off, push, get, child, onChildRemoved, onChildChanged, onChildAdded } from "firebase/database";
 
 
 // ADD_EXPENSE
@@ -41,3 +41,26 @@ export const editExpense = (id, updates)=>({
     id,
     updates
 });
+
+// SET_EXPENSES
+export const setExpenses = (expenses)=>({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+export const startSetExpenses = ()=>{
+    return (dispatch)=>{
+        return get(child(ref(db), 'expenses')).then((snapshot) => {
+            const expenses = [];
+            snapshot.forEach((childSnapshot)=>{
+                expenses.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+            dispatch(setExpenses(expenses));
+        });
+    }; 
+};
+
+
