@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'; //docs: https://github.com/reduxjs/redux-mock-store
 import thunk from 'redux-thunk';
-import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
+import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses, startRemoveExpense } from '../../actions/expenses';
 import expenses from '../fixtures/test-expenses-data';
 import { db } from '../../firebase/firebase';
 import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded, get, child } from "firebase/database";
@@ -26,6 +26,23 @@ test('should setup remove expense action object', ()=>{
     });
 });
 // toEqual is to make sure all objects are the same toBe wont work in this case
+
+test('should should remove expense from firebase', (done) => {
+    const store = createMockStore({});
+    const id = expenses[2].id;
+    store.dispatch(startRemoveExpense({ id })).then(()=>{
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id
+        });
+        return get(child(ref(db), `expenses/${id}`)).then((snapshot) => {
+            expect(snapshot.val()).toBeFalsy();
+            done();
+        }); 
+    })
+});
+
 
 test('should setup edit expense action object', ()=>{
     const action = editExpense('321cba',  {note: 'blah blah blah'})
