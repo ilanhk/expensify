@@ -3,6 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, ref, set, onValue, update, remove, off, push, onChildRemoved, onChildChanged, onChildAdded, child, get } from "firebase/database"; //set(), remove(), update(), get() are promises so can you .then for successful result and .catch for failures/errors
+import { GoogleAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,6 +26,7 @@ export const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 export const db = getDatabase();
+export const googleAuthProvider = new GoogleAuthProvider();
 
 
 
