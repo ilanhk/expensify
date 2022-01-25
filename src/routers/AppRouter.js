@@ -5,22 +5,21 @@ import { createBrowserHistory } from 'history'; //docs https://github.com/remix-
 import AddExpensePage from '../components/AddExpensePage';
 import EditExpensePage from '../components/EditExpensePage';
 import ExpenseDashBoardPage from '../components/ExpenseDashBoardPage';
-import Header from '../components/Header';
 import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage  from '../components/LoginPage';
+import PrivateRoute from './PrivateRoute';
 
 export const history = createBrowserHistory(); // <BrowserRouter/> already comes with history but having this variable we can manipulate it.
 
 const AppRouter = ()=>(
     <Router history={history}>
         <div>
-            <Header/>
             <Switch>
                 <Route path="/" component={LoginPage} exact={true}/>
-                <Route path="/dashboard" component={ExpenseDashBoardPage}/>
-                <Route path="/create" component={AddExpensePage}/>
-                <Route path="/edit/:id" component={EditExpensePage}/>
+                <PrivateRoute path="/dashboard" component={ExpenseDashBoardPage}/>
+                <PrivateRoute path="/create" component={AddExpensePage}/>
+                <PrivateRoute path="/edit/:id" component={EditExpensePage}/>
                 <Route path="/help" component={HelpPage}/>
                 <Route component={NotFoundPage}/>
             </Switch>
