@@ -11,7 +11,7 @@ import './styles/styles.scss'; //need to load in the css file to make it work
 import 'react-dates/lib/css/_datepicker.css' //need the css in order for react-dates to work
 import './firebase/firebase'; //https://console.firebase.google.com/project/expensify-f1026/overview
 import { getAuth, onAuthStateChanged } from "firebase/auth"; // https://firebase.google.com/docs/auth/web/manage-users
-
+import LoadingPage from './components/LoadingPage';
 
 
 const store = configureStore();
@@ -31,7 +31,7 @@ const renderApp = ()=>{
   }
 };
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 
 const auth = getAuth();

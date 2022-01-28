@@ -24,7 +24,7 @@ module.exports = (env)=>{
     const isProduction = env === 'production';
 
     return {
-        entry: './src/app.js', //need to tell webpack where it should start (the file that runs the app)
+        entry: ['babel-polyfill', './src/app.js'], //need to tell webpack where it should start (the file that runs the app) can be a single string or an array of strings. docs for babel-polyfill: https://babeljs.io/docs/en/babel-polyfill
         output: {
             path:path.join(__dirname, 'public', 'dist'), // this is the absoulute path on the machine to where i need to output that webpack file
             filename:'bundle.js' // bundle.js is a very common filename for webpack. but can name the filename to anything
@@ -42,7 +42,8 @@ module.exports = (env)=>{
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: true
+                            sourceMap: true,
+                            url: false
                         }
                     },
                     {

@@ -1,13 +1,19 @@
 // this is called a partial file (because it has part of the app's styles) and must start with '_filename.scss'
 // 1rem = 16px
 
+*{
+    box-sizing: border-box;
+}
+
 html{
     font-size: 62.5%; // to work in an rem system based 10 to px. So 2.2rem = 22px
 }
 
 body{
+    color: $dark-grey;
     font-family: Helvetica, Arial, sans-serif; //ask to use the 1st font if that doesnt work use the next or the next ..etc
     font-size: $medium-size;
+    line-height: 1.6;
 }
 
 button{

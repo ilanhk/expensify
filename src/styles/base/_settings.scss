@@ -2,14 +2,17 @@
 // allows us to create css variables to use in more than one selector
 // Easier for us to  change the variable in 1 page instead of going through all selectors in different files.
 
-// $brand-color: blue; // you can set up variables like this
-
-// *{
-//     color: $brand-color;
-// }
-
 
 //Colors
+$dark-grey: #333333;
+$grey: #666;
+$blue: #1c88bf;
+$dark-blue: #364051;
+$off-white: #f7f7f7;
+
+//Font sizes
+$font-size-large: 1.8rem;
+$font-size-small: 1.4rem;
 
 //Spacing
 $small-size: 1.2rem; 

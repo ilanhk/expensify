@@ -1,0 +1,19 @@
+.header{
+    background: $dark-blue;
+
+}
+
+.header__content{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: $small-size 0;
+}
+
+.header__title{
+    color: white;
+    text-decoration: none; //this will get rid of the line defaulted to link
+    h1 {
+        margin: 0;
+    }
+}

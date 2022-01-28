@@ -1,0 +1,21 @@
+.input-group{
+    display: flex;
+    flex-direction: column; // this is the way how things are stacked the default it is set to row so we set to column for mobile devices
+    margin-bottom: $medium-size;
+
+
+
+    @media (min-width: $desktop-breakpoint){
+        flex-direction: row;
+        margin-bottom: $large-size;
+    } //only will apply these styles if the minimum width is $desktop-breakpoint (this is for larger screens)
+    
+}
+
+.input-group__item{
+    margin-bottom: $small-size;
+
+    @media (min-width: $desktop-breakpoint){
+        margin: 0 $small-size 0 0;
+    }
+}
